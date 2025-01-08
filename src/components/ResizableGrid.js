@@ -1,46 +1,23 @@
 import React, { useState } from "react";
+import "./ResizableGrid.css"; // Import the CSS file
 
 // A single grid cell component
 const GridCell = ({ row, col, size, onClick, color, shape }) => {
   return (
     <div
       onClick={() => onClick(row, col)}
-      style={{
-        width: size,
-        height: size,
-        backgroundColor: "white",
-        border: "1px solid black",
-        display: "inline-block",
-        position: "relative",
-      }}
+      className="grid-cell" // Apply grid-cell class
     >
       {shape === "circle" && (
         <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            width: size / 2,
-            height: size / 2,
-            backgroundColor: color,
-            borderRadius: "50%",
-            transform: "translate(-50%, -50%)",
-            cursor: "pointer",
-          }}
+          className="circle"
+          style={{ backgroundColor: color }} // Apply color dynamically
         />
       )}
       {shape === "square" && (
         <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            width: size / 2,
-            height: size / 2,
-            backgroundColor: color,
-            transform: "translate(-50%, -50%)",
-            cursor: "pointer",
-          }}
+          className="square"
+          style={{ backgroundColor: color }} // Apply color dynamically
         />
       )}
     </div>
@@ -118,8 +95,8 @@ const ResizableGrid = () => {
 
       {/* Render grid */}
       <div
+        className="grid-container"
         style={{
-          display: "grid",
           gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
           gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
         }}
