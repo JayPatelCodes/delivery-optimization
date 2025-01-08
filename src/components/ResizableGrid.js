@@ -1,78 +1,159 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const ResizableGrid = ({ onCellClick }) => {
-  const [rows, setRows] = useState(5); // Default number of rows
-  const [cols, setCols] = useState(5); // Default number of columns
+// A single grid cell component
+const GridCell = ({ row, col, size, onClick, color, shape }) => {
+  return (
+    <div
+      onClick={() => onClick(row, col)}
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: "white",
+        border: "1px solid black",
+        display: "inline-block",
+        position: "relative",
+      }}
+    >
+      {shape === "circle" && (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: size / 2,
+            height: size / 2,
+            backgroundColor: color,
+            borderRadius: "50%",
+            transform: "translate(-50%, -50%)",
+            cursor: "pointer",
+          }}
+        />
+      )}
+      {shape === "square" && (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: size / 2,
+            height: size / 2,
+            backgroundColor: color,
+            transform: "translate(-50%, -50%)",
+            cursor: "pointer",
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+// Main ResizableGrid component
+const ResizableGrid = () => {
+  const [rows, setRows] = useState(5); // Default rows
+  const [cols, setCols] = useState(5); // Default columns
   const cellSize = 50; // Size of each cell in pixels
+  const colors = ["red", "orange", "yellow", "green", "blue"]; // Colors for routes
+  const [routes, setRoutes] = useState([]); // Store route sets
 
-  // Calculate the width and height of the grid
-  const gridWidth = cols * cellSize;
-  const gridHeight = rows * cellSize;
+  // Handle cell click to add/remove start or end points
+  const handleCellClick = (row, col) => {
+    const existingRouteIndex = routes.findIndex(
+      (route) =>
+        (route.start.row === row && route.start.col === col) ||
+        (route.end.row === row && route.end.col === col)
+    );
 
-  // Generate grid cells
-  const cells = [];
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      cells.push({ x: col * cellSize, y: row * cellSize, row, col });
+    if (existingRouteIndex !== -1) {
+      // Remove the route if the clicked point is already part of a route
+      const updatedRoutes = [...routes];
+      updatedRoutes.splice(existingRouteIndex, 1);
+      setRoutes(updatedRoutes);
+    } else {
+      // Add new route or update the latest route
+      const currentRoute = routes[routes.length - 1];
+      if (!currentRoute || currentRoute.end.row !== -1) {
+        // Add a new route with a start point
+        if (routes.length < 5) {
+          setRoutes((prev) => [
+            ...prev,
+            { start: { row, col }, end: { row: -1, col: -1 }, color: colors[prev.length] },
+          ]);
+        }
+      } else {
+        // Add an end point to the last route
+        const updatedRoutes = [...routes];
+        updatedRoutes[updatedRoutes.length - 1].end = { row, col };
+        setRoutes(updatedRoutes);
+      }
     }
-  }
+  };
 
   return (
     <div>
-      <div style={{ marginBottom: '10px' }}>
+      {/* Grid resizing controls */}
+      <div style={{ marginBottom: "10px" }}>
         <label>
-          Rows: 
+          Rows:
           <input
             type="number"
             value={rows}
             onChange={(e) => setRows(Number(e.target.value) || 1)}
             min="5"
             max="20"
-            style={{ margin: '0 10px' }}
+            style={{ margin: "0 10px" }}
           />
         </label>
         <label>
-          Columns: 
+          Columns:
           <input
             type="number"
             value={cols}
             onChange={(e) => setCols(Number(e.target.value) || 1)}
             min="5"
             max="20"
-            style={{ margin: '0 10px' }}
+            style={{ margin: "0 10px" }}
           />
         </label>
       </div>
-      <svg
-        width={gridWidth}
-        height={gridHeight}
-        style={{ border: '1px solid black' }}
-        onClick={(e) => {
-          const rect = e.target.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
 
-          const clickedCol = Math.floor(x / cellSize);
-          const clickedRow = Math.floor(y / cellSize);
-
-          if (onCellClick) {
-            onCellClick(clickedRow, clickedCol);
-          }
+      {/* Render grid */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
+          gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
         }}
       >
-        {/* Render grid lines */}
-        {cells.map((cell, index) => (
-          <rect
-            key={index}
-            x={cell.x}
-            y={cell.y}
-            width={cellSize}
-            height={cellSize}
-            fill="white"
-            stroke="black"
-          />
-        ))}
-      </svg>
+        {[...Array(rows)].map((_, row) =>
+          [...Array(cols)].map((_, col) => {
+            // Determine the shape and color for the current cell
+            let shape = null;
+            let cellColor = null;
+
+            for (const route of routes) {
+              if (route.start.row === row && route.start.col === col) {
+                shape = "circle";
+                cellColor = route.color; // Start point
+              } else if (route.end.row === row && route.end.col === col) {
+                shape = "square";
+                cellColor = route.color; // End point
+              }
+            }
+
+            return (
+              <GridCell
+                key={`${row}-${col}`}
+                row={row}
+                col={col}
+                size={cellSize}
+                onClick={handleCellClick}
+                color={cellColor}
+                shape={shape}
+              />
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,45 @@
+/* ResizableGrid.css */
+
+/* Grid container styling */
+.grid-container {
+    display: grid;
+    gap: 1px;
+    border: 1px solid black;
+  }
+  
+  /* Grid cell styling */
+  .grid-cell {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid black;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  /* Circle (start point) styling */
+  .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: red; /* Default color */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+  
+  /* Square (end point) styling */
+  .square {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: red; /* Default color */
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+  
