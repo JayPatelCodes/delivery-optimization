@@ -2,20 +2,18 @@
 
 /* Grid container styling */
 .grid-container {
-    display: grid;
-    gap: 1px;
-    border: 1px solid black;
-  }
+  display: grid;
+  gap: 0;
+  border: none;
+}
   
-  /* Grid cell styling */
+  /* Grid cell styling */  
   .grid-cell {
     width: 50px;
     height: 50px;
     background-color: white;
     border: 1px solid black;
     position: relative;
-    display: inline-block;
-    cursor: pointer;
   }
   
   /* Circle (start point) styling */

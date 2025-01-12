@@ -1,74 +1,59 @@
 import React, { useState } from "react";
-import "./ResizableGrid.css"; // Import the CSS file
+import "./ResizableGrid.css"; // Assuming your CSS file for styling
 
-// A single grid cell component
-const GridCell = ({ row, col, size, onClick, color, shape }) => {
-  return (
-    <div
-      onClick={() => onClick(row, col)}
-      className="grid-cell" // Apply grid-cell class
-    >
-      {shape === "circle" && (
-        <div
-          className="circle"
-          style={{ backgroundColor: color }} // Apply color dynamically
-        />
-      )}
-      {shape === "square" && (
-        <div
-          className="square"
-          style={{ backgroundColor: color }} // Apply color dynamically
-        />
-      )}
-    </div>
-  );
-};
-
-// Main ResizableGrid component
 const ResizableGrid = () => {
-  const [rows, setRows] = useState(5); // Default rows
-  const [cols, setCols] = useState(5); // Default columns
-  const cellSize = 50; // Size of each cell in pixels
-  const colors = ["red", "orange", "yellow", "green", "blue"]; // Colors for routes
-  const [routes, setRoutes] = useState([]); // Store route sets
+  const colors = ["red", "orange", "yellow", "green", "blue"];
+  const [availableColors, setAvailableColors] = useState([...colors]);
+  const [rows, setRows] = useState(5);
+  const [cols, setCols] = useState(5);
+  const cellSize = 50;
+  const [routes, setRoutes] = useState([]);
 
-  // Handle cell click to add/remove start or end points
   const handleCellClick = (row, col) => {
     const existingRouteIndex = routes.findIndex(
       (route) =>
         (route.start.row === row && route.start.col === col) ||
         (route.end.row === row && route.end.col === col)
     );
-
+  
     if (existingRouteIndex !== -1) {
-      // Remove the route if the clicked point is already part of a route
+      // Remove the route and recycle its color
+      const removedRoute = routes[existingRouteIndex];
+      setAvailableColors((prev) => [...prev, removedRoute.color]);
       const updatedRoutes = [...routes];
       updatedRoutes.splice(existingRouteIndex, 1);
       setRoutes(updatedRoutes);
     } else {
-      // Add new route or update the latest route
-      const currentRoute = routes[routes.length - 1];
-      if (!currentRoute || currentRoute.end.row !== -1) {
-        // Add a new route with a start point
-        if (routes.length < 5) {
+      const lastRoute = routes[routes.length - 1];
+  
+      if (routes.length < 5 && availableColors.length > 0) {
+        if (!lastRoute || lastRoute.end.row !== -1) {
+          // Add new route with start point
+          const newColor = availableColors[0];
+          setAvailableColors((prev) => prev.slice(1));
           setRoutes((prev) => [
             ...prev,
-            { start: { row, col }, end: { row: -1, col: -1 }, color: colors[prev.length] },
+            { start: { row, col }, end: { row: -1, col: -1 }, color: newColor },
           ]);
+        } else {
+          // Place the endpoint for the current route
+          const updatedRoutes = [...routes];
+          updatedRoutes[updatedRoutes.length - 1].end = { row, col };
+          setRoutes(updatedRoutes);
         }
-      } else {
-        // Add an end point to the last route
+      } else if (lastRoute && lastRoute.end.row === -1) {
+        // Ensure the final route can place an endpoint
         const updatedRoutes = [...routes];
         updatedRoutes[updatedRoutes.length - 1].end = { row, col };
         setRoutes(updatedRoutes);
       }
     }
   };
+  
 
   return (
     <div>
-      {/* Grid resizing controls */}
-      <div style={{ marginBottom: "10px" }}>
+      <div className="grid-controls">
         <label>
           Rows:
           <input
@@ -77,7 +62,6 @@ const ResizableGrid = () => {
             onChange={(e) => setRows(Number(e.target.value) || 1)}
             min="5"
             max="20"
-            style={{ margin: "0 10px" }}
           />
         </label>
         <label>
@@ -88,12 +72,10 @@ const ResizableGrid = () => {
             onChange={(e) => setCols(Number(e.target.value) || 1)}
             min="5"
             max="20"
-            style={{ margin: "0 10px" }}
           />
         </label>
       </div>
 
-      {/* Render grid */}
       <div
         className="grid-container"
         style={{
@@ -103,30 +85,38 @@ const ResizableGrid = () => {
       >
         {[...Array(rows)].map((_, row) =>
           [...Array(cols)].map((_, col) => {
-            // Determine the shape and color for the current cell
             let shape = null;
             let cellColor = null;
 
             for (const route of routes) {
               if (route.start.row === row && route.start.col === col) {
                 shape = "circle";
-                cellColor = route.color; // Start point
+                cellColor = route.color;
               } else if (route.end.row === row && route.end.col === col) {
                 shape = "square";
-                cellColor = route.color; // End point
+                cellColor = route.color;
               }
             }
 
             return (
-              <GridCell
+              <div
                 key={`${row}-${col}`}
-                row={row}
-                col={col}
-                size={cellSize}
-                onClick={handleCellClick}
-                color={cellColor}
-                shape={shape}
-              />
+                className={`grid-cell`}
+                onClick={() => handleCellClick(row, col)}
+              >
+                {shape === "circle" && (
+                  <div
+                    className="circle"
+                    style={{ backgroundColor: cellColor }}
+                  />
+                )}
+                {shape === "square" && (
+                  <div
+                    className="square"
+                    style={{ backgroundColor: cellColor }}
+                  />
+                )}
+              </div>
             );
           })
         )}
