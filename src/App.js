@@ -1,10 +1,11 @@
 import React from "react";
 import ResizableGrid from "./components/ResizableGrid";
+import './App.css';  // Ensure the CSS is imported for styling
 
 function App() {
   return (
     <div>
-      <h1>Delivery Optimization Grid</h1>
+      <h1 className="grid-title">Delivery Optimization Grid</h1>
       <ResizableGrid />
     </div>
   );

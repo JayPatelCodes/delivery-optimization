@@ -1,0 +1,9 @@
+/* Title styling */
+.grid-title {
+    text-align: center;  /* Centers the title horizontally */
+    font-size: 24px;      /* Adjust the font size as needed */
+    font-weight: bold;    /* Optional: Makes the title bold */
+    color: #333;          /* Dark color for the title */
+    margin-bottom: 20px;  /* Adds spacing below the title */
+  }
+  

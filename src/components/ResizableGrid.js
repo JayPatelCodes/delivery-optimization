@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ResizableGrid.css"; // Assuming your CSS file for styling
+import "./ResizableGrid.css";
 
 const ResizableGrid = () => {
   const colors = ["red", "orange", "yellow", "green", "blue"];
@@ -17,7 +17,7 @@ const ResizableGrid = () => {
     );
   
     if (existingRouteIndex !== -1) {
-      // Remove the route and recycle its color
+      // Remove the route and recycle its colour
       const removedRoute = routes[existingRouteIndex];
       setAvailableColors((prev) => [...prev, removedRoute.color]);
       const updatedRoutes = [...routes];
@@ -50,7 +50,9 @@ const ResizableGrid = () => {
     }
   };
   
-
+  // The buttons that change the number of rows and columns for the grid 
+  // The grid container holds the grid squares
+  // Each grid square can have a circle to represent the beginning of a route and a square to represent the end of a route
   return (
     <div>
       <div className="grid-controls">
@@ -76,50 +78,53 @@ const ResizableGrid = () => {
         </label>
       </div>
 
-      <div
-        className="grid-container"
-        style={{
-          gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
-          gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
-        }}
-      >
-        {[...Array(rows)].map((_, row) =>
-          [...Array(cols)].map((_, col) => {
-            let shape = null;
-            let cellColor = null;
+      {/* Wrapper div to center the grid */}
+      <div className="grid-wrapper">
+        <div
+          className="grid-container"
+          style={{
+            gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
+            gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
+          }}
+        >
+          {[...Array(rows)].map((_, row) =>
+            [...Array(cols)].map((_, col) => {
+              let shape = null;
+              let cellColor = null;
 
-            for (const route of routes) {
-              if (route.start.row === row && route.start.col === col) {
-                shape = "circle";
-                cellColor = route.color;
-              } else if (route.end.row === row && route.end.col === col) {
-                shape = "square";
-                cellColor = route.color;
+              for (const route of routes) {
+                if (route.start.row === row && route.start.col === col) {
+                  shape = "circle";
+                  cellColor = route.color;
+                } else if (route.end.row === row && route.end.col === col) {
+                  shape = "square";
+                  cellColor = route.color;
+                }
               }
-            }
 
-            return (
-              <div
-                key={`${row}-${col}`}
-                className={`grid-cell`}
-                onClick={() => handleCellClick(row, col)}
-              >
-                {shape === "circle" && (
-                  <div
-                    className="circle"
-                    style={{ backgroundColor: cellColor }}
-                  />
-                )}
-                {shape === "square" && (
-                  <div
-                    className="square"
-                    style={{ backgroundColor: cellColor }}
-                  />
-                )}
-              </div>
-            );
-          })
-        )}
+              return (
+                <div
+                  key={`${row}-${col}`}
+                  className={`grid-cell`}
+                  onClick={() => handleCellClick(row, col)}
+                >
+                  {shape === "circle" && (
+                    <div
+                      className="circle"
+                      style={{ backgroundColor: cellColor }}
+                    />
+                  )}
+                  {shape === "square" && (
+                    <div
+                      className="square"
+                      style={{ backgroundColor: cellColor }}
+                    />
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
       </div>
     </div>
   );
