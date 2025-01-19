@@ -1,9 +1,16 @@
-/* Title styling */
+/* Grid title style */
 .grid-title {
-    text-align: center;  
-    font-size: 24px;     
-    font-weight: bold;    
-    color: #333;        
-    margin-bottom: 20px; 
-  }
-  
+  position: fixed; 
+  top: 40px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  font-size: 32px; 
+  font-weight: bold;
+  color: #333;
+  margin: 0; 
+  padding: 10px 20px; 
+  background-color: #f1f4f8; 
+  z-index: 100; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
