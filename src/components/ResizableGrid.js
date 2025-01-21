@@ -15,7 +15,7 @@ const ResizableGrid = () => {
         (route.start.row === row && route.start.col === col) ||
         (route.end.row === row && route.end.col === col)
     );
-  
+
     if (existingRouteIndex !== -1) {
       // Remove the route and recycle its colour
       const removedRoute = routes[existingRouteIndex];
@@ -25,7 +25,7 @@ const ResizableGrid = () => {
       setRoutes(updatedRoutes);
     } else {
       const lastRoute = routes[routes.length - 1];
-  
+
       if (routes.length < 5 && availableColors.length > 0) {
         if (!lastRoute || lastRoute.end.row !== -1) {
           // Add new route with start point
@@ -49,10 +49,14 @@ const ResizableGrid = () => {
       }
     }
   };
-  
-  // The buttons that change the number of rows and columns for the grid 
-  // The grid container holds the grid squares
-  // Each grid square can have a circle to represent the beginning of a route and a square to represent the end of a route
+
+  const canStartAlgorithm = routes.length === 5 && routes.every((route) => route.end.row !== -1);
+
+  const handleStartGeneticAlgorithm = () => {
+    alert("Starting genetic algorithm!");
+    // The actual algorithm
+  };
+
   return (
     <div>
       <div className="grid-controls">
@@ -76,6 +80,13 @@ const ResizableGrid = () => {
             max="20"
           />
         </label>
+        <button
+          id="startGeneticAlgorithm"
+          disabled={!canStartAlgorithm}
+          onClick={handleStartGeneticAlgorithm}
+        >
+          Start Genetic Algorithm
+        </button>
       </div>
 
       {/* Wrapper div to center the grid */}
