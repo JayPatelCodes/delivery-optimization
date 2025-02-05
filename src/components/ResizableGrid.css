@@ -171,9 +171,9 @@ button:disabled {
 }
 
 .traffic-zone {
-  background-color: rgb(249, 84, 84);
+  background-color: rgb(251, 119, 119);
 }
 
 .grid-cell.traffic-zone:hover {
-  background-color: #b30000; 
+  background-color: #df2d2d; 
 }

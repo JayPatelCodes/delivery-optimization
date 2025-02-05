@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ResizableGrid.css";
 
 const ResizableGrid = () => {
@@ -12,6 +12,13 @@ const ResizableGrid = () => {
   const [gridData, setGridData] = useState(
     Array.from({ length: rows }, () => Array.from({ length: cols }, () => ({ type: 'empty' })))
   );
+
+  // Update gridData when rows or cols change
+  useEffect(() => {
+    setGridData(
+      Array.from({ length: rows }, () => Array.from({ length: cols }, () => ({ type: 'empty' })))
+    );
+  }, [rows, cols]);
 
   const handleCellClick = (row, col) => {
     if (mode === "start-end") {
@@ -50,14 +57,13 @@ const ResizableGrid = () => {
         }
       }
     } else if (mode === "traffic") {
-      const isTrafficZone = gridData[row][col].type === 'trafficZone';
 
-      if (isTrafficZone) {
-        gridData[row][col].type = 'normal';
-      } else {
-        gridData[row][col].type = 'trafficZone';
+      if (gridData[row] && gridData[row][col]) {
+        const isTrafficZone = gridData[row][col].type === 'trafficZone';
+
+        gridData[row][col].type = isTrafficZone ? 'normal' : 'trafficZone';
+        setGridData([...gridData]);
       }
-      setGridData([...gridData]);
     }
   };
 
@@ -125,7 +131,7 @@ const ResizableGrid = () => {
                 }
 
                 // Determine if it's a traffic zone 
-                const isTrafficZone = gridData[row][col].type === 'trafficZone';
+                const isTrafficZone = gridData[row] && gridData[row][col] && gridData[row][col].type === 'trafficZone';
                 const trafficZoneClass = isTrafficZone ? 'traffic-zone' : '';
 
                 return (

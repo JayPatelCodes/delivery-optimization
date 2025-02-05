@@ -1,6 +1,6 @@
 import React from "react";
 import ResizableGrid from "./components/ResizableGrid";
-import './App.css';  // Ensure the CSS is imported for styling
+import './App.css'; 
 
 function App() {
   return (
