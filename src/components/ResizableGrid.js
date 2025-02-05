@@ -9,6 +9,9 @@ const ResizableGrid = () => {
   const cellSize = 50;
   const [routes, setRoutes] = useState([]);
   const [mode, setMode] = useState("start-end");
+  const [gridData, setGridData] = useState(
+    Array.from({ length: rows }, () => Array.from({ length: cols }, () => ({ type: 'empty' })))
+  );
 
   const handleCellClick = (row, col) => {
     if (mode === "start-end") {
@@ -46,6 +49,15 @@ const ResizableGrid = () => {
           setRoutes(updatedRoutes);
         }
       }
+    } else if (mode === "traffic") {
+      const isTrafficZone = gridData[row][col].type === 'trafficZone';
+
+      if (isTrafficZone) {
+        gridData[row][col].type = 'normal';
+      } else {
+        gridData[row][col].type = 'trafficZone';
+      }
+      setGridData([...gridData]);
     }
   };
 
@@ -112,10 +124,14 @@ const ResizableGrid = () => {
                   }
                 }
 
+                // Determine if it's a traffic zone 
+                const isTrafficZone = gridData[row][col].type === 'trafficZone';
+                const trafficZoneClass = isTrafficZone ? 'traffic-zone' : '';
+
                 return (
                   <div
                     key={`${row}-${col}`}
-                    className="grid-cell"
+                    className={`grid-cell ${trafficZoneClass}`}
                     onClick={() => handleCellClick(row, col)}
                   >
                     {shape === "circle" && (
