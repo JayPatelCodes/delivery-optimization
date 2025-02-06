@@ -46,8 +46,15 @@ body {
   background-color: #0056b3;
 }
 
+.sidebar button.active {
+  background-color: #013c7b; /* Change to any highlight color */
+  color: white;
+}
+
+
 .grid-container {
   display: grid;
+  position: relative;
   gap: 8px;
   grid-template-columns: repeat(5, 60px);
   grid-template-rows: repeat(5, 60px);
