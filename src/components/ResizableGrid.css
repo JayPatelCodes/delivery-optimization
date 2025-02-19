@@ -47,7 +47,7 @@ body {
 }
 
 .sidebar button.active {
-  background-color: #013c7b; /* Change to any highlight color */
+  background-color: #013c7b; 
   color: white;
 }
 
