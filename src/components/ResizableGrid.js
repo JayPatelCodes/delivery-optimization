@@ -1,6 +1,7 @@
 import React from "react";
+import './ResizableGrid.css';
 
-const Grid = ({ rows, cols, routes, setRoutes, mode, gridData, setGridData, availableColors, setAvailableColors }) => {
+const ResizableGrid = ({ rows, cols, routes, setRoutes, mode, gridData, setGridData, availableColors, setAvailableColors }) => {
   const cellSize = 50;
 
   const handleCellClick = (row, col) => {
@@ -62,4 +63,4 @@ const Grid = ({ rows, cols, routes, setRoutes, mode, gridData, setGridData, avai
   );
 };
 
-export default Grid;
+export default ResizableGrid;

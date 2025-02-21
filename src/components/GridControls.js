@@ -1,5 +1,6 @@
 // GridControls.js
 import React from "react";
+import './GridControls.css';
 
 const GridControls = ({ rows, cols, setRows, setCols, canStartAlgorithm, handleStartGeneticAlgorithm }) => {
   return (
