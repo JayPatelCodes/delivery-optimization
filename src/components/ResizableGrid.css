@@ -42,7 +42,11 @@
   height: 30px;
   background-color: white;
   transform: translate(-50%, -50%);
-  border: 2px solid #fff;
+}
+
+.circle {
+  border-radius: 50%; 
+  border: 2.3px solid #fff;
 }
 
 .square {
