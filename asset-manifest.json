@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/genetic-algorithm/static/css/main.96e3d2e7.css",
+    "main.js": "/genetic-algorithm/static/js/main.66f487bf.js",
+    "static/js/453.dab34720.chunk.js": "/genetic-algorithm/static/js/453.dab34720.chunk.js",
+    "index.html": "/genetic-algorithm/index.html",
+    "main.96e3d2e7.css.map": "/genetic-algorithm/static/css/main.96e3d2e7.css.map",
+    "main.66f487bf.js.map": "/genetic-algorithm/static/js/main.66f487bf.js.map",
+    "453.dab34720.chunk.js.map": "/genetic-algorithm/static/js/453.dab34720.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.96e3d2e7.css",
+    "static/js/main.66f487bf.js"
+  ]
+}
