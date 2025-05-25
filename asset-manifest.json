@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/genetic-algorithm/static/css/main.96e3d2e7.css",
-    "main.js": "/genetic-algorithm/static/js/main.66f487bf.js",
-    "static/js/453.dab34720.chunk.js": "/genetic-algorithm/static/js/453.dab34720.chunk.js",
-    "index.html": "/genetic-algorithm/index.html",
-    "main.96e3d2e7.css.map": "/genetic-algorithm/static/css/main.96e3d2e7.css.map",
-    "main.66f487bf.js.map": "/genetic-algorithm/static/js/main.66f487bf.js.map",
-    "453.dab34720.chunk.js.map": "/genetic-algorithm/static/js/453.dab34720.chunk.js.map"
+    "main.css": "/delivery-optimization/static/css/main.96e3d2e7.css",
+    "main.js": "/delivery-optimization/static/js/main.1a5b5a4d.js",
+    "static/js/453.40abf049.chunk.js": "/delivery-optimization/static/js/453.40abf049.chunk.js",
+    "index.html": "/delivery-optimization/index.html",
+    "main.96e3d2e7.css.map": "/delivery-optimization/static/css/main.96e3d2e7.css.map",
+    "main.1a5b5a4d.js.map": "/delivery-optimization/static/js/main.1a5b5a4d.js.map",
+    "453.40abf049.chunk.js.map": "/delivery-optimization/static/js/453.40abf049.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.96e3d2e7.css",
-    "static/js/main.66f487bf.js"
+    "static/js/main.1a5b5a4d.js"
   ]
 }
