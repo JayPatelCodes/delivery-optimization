@@ -55,7 +55,7 @@ The app will be accessible at `http://localhost:3000`.
 
 ## **Live Demo**
 
-The live demo will be uploaded when the project is near completion.
+You can try out the project without installing it by visiting the live demo: [Delivery Optimization Live Demo](https://jaypatelcodes.github.io/delivery-optimization)
 
 ---
 
